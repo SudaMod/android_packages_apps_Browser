@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.suda.utils.SudaUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -60,8 +61,8 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
 
     // TODO: Do something with this UserAgent stuff
     private static final String DESKTOP_USERAGENT = "Mozilla/5.0 (X11; " +
-        "Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " +
-        "Chrome/30.0.1599.101 Safari/537.36";
+        "Linux x86_64) AppleWebKit/534.24 (KHTML, like Gecko) " +
+        "Chrome/11.0.696.34 Safari/534.24";
 
     private static final String IPHONE_USERAGENT = "Mozilla/5.0 (iPhone; U; " +
         "CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 " +
@@ -609,7 +610,7 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
     // -----------------------------
 
     public String getSearchEngineName() {
-        return mPrefs.getString(PREF_SEARCH_ENGINE, SearchEngine.GOOGLE);
+        return mPrefs.getString(PREF_SEARCH_ENGINE, SudaUtils.isSupportLanguage(true) ? SearchEngine.BAIDU : SearchEngine.GOOGLE);
     }
 
     public boolean allowAppTabs() {
