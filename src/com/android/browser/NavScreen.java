@@ -148,7 +148,8 @@ public class NavScreen extends RelativeLayout
             }
         });
         mNewTabFab = (ImageView) findViewById(R.id.floating_action_button);
-        mNewTabFab.setOnClickListener(new View.OnClickListener() {
+        mNewTabFab.setOnClickListener(
+        new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewTab(false);
