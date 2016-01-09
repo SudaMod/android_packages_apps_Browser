@@ -22,9 +22,12 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.suda.utils.SudaUtils;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.ActionMode;
@@ -37,6 +40,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
+import com.android.browser.search.SearchEngine;
 import com.android.browser.stub.NullController;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -76,6 +80,15 @@ public class BrowserActivity extends Activity
             finish();
             return;
         }
+
+        // restore default search engine to google when language isn't cn and hk.
+        if (!SudaUtils.isSupportLanguage(true)) {
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String defSearchEngine = mPrefs.getString(PreferenceKeys.PREF_SEARCH_ENGINE, SearchEngine.BAIDU);
+            if (defSearchEngine.equals(SearchEngine.BAIDU))
+                mPrefs.edit().putString(PreferenceKeys.PREF_SEARCH_ENGINE, SearchEngine.GOOGLE).apply();
+        }
+
         mController = createController();
 
         Intent intent = (icicle == null) ? getIntent() : null;
